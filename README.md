@@ -3,7 +3,7 @@
 > A dockerized script for sending commands to ZTE MC routers
 
 This repository provides a Docker image for the
-[`mc.py` script](https://github.com/Kajkac/ZTE-MC-Home-assistant-repo/blob/b938e88878251d3ca4b95b76e6d15ede26637f78/custom_components/zte_router/mc.py) that is part of the
+[`mc.py` script](https://github.com/Kajkac/ZTE-MC-Home-assistant-repo/blob/d359fae92f14a740356e958d0932742143e8f760/custom_components/zte_router/mc.py) that is part of the
 [ZTE Router Integration for Home Assistant](https://github.com/Kajkac/ZTE-MC-Home-assistant-repo)
 but can also be used standalone.
 
@@ -15,16 +15,26 @@ and it becomes easy to run via SSH or other means (like a webhook).
 ## Usage
 
 ```sh
-docker run --rm --network host ghcr.io/mserajnik/mc-py-docker mc-py 192.168.254.1 foo 1 ""
+docker run --rm --network host ghcr.io/mserajnik/mc-py-docker mc-py IP PASSWORD COMMAND [USERNAME] [PHONE_NUMBER] [MESSAGE]
 ```
 
-- `192.168.254.1` is the router IP
-- `foo` is the password
-- `1` is the command to execute; see [here](https://github.com/Kajkac/ZTE-MC-Home-assistant-repo/blob/b938e88878251d3ca4b95b76e6d15ede26637f78/custom_components/zte_router/mc.py#L425-L495)
+- `IP` is the router's IP (e.g., `192.168.254.1`)
+- `PASSWORD` is the password for the router's web UI
+- `COMMAND` is the command to execute; see
+  [here](https://github.com/Kajkac/ZTE-MC-Home-assistant-repo/blob/d359fae92f14a740356e958d0932742143e8f760/custom_components/zte_router/mc.py#L784-L855)
   for the available commands
-- `""` is the username; in case of a single user system (which should be the
-  default on most routers), this has to be an empty string so the script does
-  not error
+- `USERNAME` is the username for the router's web UI (optional; by default,
+  there is only a single user and this is not required)
+- `PHONE_NUMBER` is the phone number to send the `MESSAGE` to as SMS (only
+  required when using command `8` to send an SMS)
+- `MESSAGE` is the message to send as SMS to the `PHONE_NUMBER` (only required
+  when using command `8` to send an SMS)
+
+E.g., to fetch router information (command `1`):
+
+```sh
+docker run --rm --network host ghcr.io/mserajnik/mc-py-docker mc-py 192.168.254.1 secretPassword 1
+```
 
 ## Maintainer
 

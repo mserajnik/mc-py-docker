@@ -9,13 +9,14 @@ ENV \
 
 WORKDIR /opt
 
-# Pinned to commit b938e88878251d3ca4b95b76e6d15ede26637f78 in case of breaking
+# Pinned to commit d359fae92f14a740356e958d0932742143e8f760 in case of breaking
 # changes
-ADD https://raw.githubusercontent.com/Kajkac/ZTE-MC-Home-assistant-repo/b938e88878251d3ca4b95b76e6d15ede26637f78/custom_components/zte_router/mc.py /opt/mc.py
+ADD https://raw.githubusercontent.com/Kajkac/ZTE-MC-Home-assistant-repo/d359fae92f14a740356e958d0932742143e8f760/custom_components/zte_router/mc.py /opt/mc.py
 
 RUN \
   pip install \
-    requests~=2.32.3 && \
+    cryptography~=43.0.1 \
+    urllib3~=2.2.3 && \
   rm -r ~/.cache && \
   chown -R ${USER_ID}:${GROUP_ID} /opt
 
