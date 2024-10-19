@@ -1,4 +1,4 @@
-FROM python:3.12-alpine
+FROM python:3.13-alpine
 
 ARG USER_ID=1000
 ARG GROUP_ID=1000
