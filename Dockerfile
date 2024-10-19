@@ -13,15 +13,14 @@ WORKDIR /opt
 # changes
 ADD https://raw.githubusercontent.com/Kajkac/ZTE-MC-Home-assistant-repo/d359fae92f14a740356e958d0932742143e8f760/custom_components/zte_router/mc.py /opt/mc.py
 
-RUN \
-  pip install \
-    cryptography~=43.0.1 \
-    urllib3~=2.2.3 && \
-  rm -r ~/.cache && \
-  chown -R ${USER_ID}:${GROUP_ID} /opt
-
 COPY docker-cmd-mc-py.sh /usr/local/bin/mc-py
-RUN chmod +x /usr/local/bin/mc-py
+
+RUN \
+  pip install --no-cache-dir \
+    cryptography~=43.0.3 \
+    urllib3~=2.2.3 && \
+  chown -R ${USER_ID}:${GROUP_ID} /opt && \
+  chmod +x /usr/local/bin/mc-py
 
 USER ${USER_ID}:${GROUP_ID}
 
